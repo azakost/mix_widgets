@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
 
+import '../progress/widget.dart';
 import '../wrapper_modifier.dart';
 import 'spec.dart';
 
@@ -29,6 +30,7 @@ class Btn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isLoading = false;
     return SpecBuilder(
       inherit: inherit,
       style: style ?? Style(),
@@ -36,36 +38,48 @@ class Btn extends StatelessWidget {
         final spec = BtnSpec.of(context);
         return WrapperModifier(
           modifiers: [...(spec.modifiers?.value ?? [])],
-          child: ElevatedButton.icon(
-            iconAlignment: (spec.iconOnRight ?? false) ? IconAlignment.end : IconAlignment.start,
-            style: ElevatedButton.styleFrom(
-              foregroundColor: spec.foregroundColor,
-              backgroundColor: spec.backgroundColor,
-              disabledBackgroundColor: spec.disabledBackgroundColor,
-              disabledForegroundColor: spec.disabledForegroundColor,
-              shadowColor: spec.shadowColor,
-              overlayColor: spec.overlayColor,
-              iconColor: spec.iconColor,
-              side: spec.side,
-              alignment: spec.alignment,
-              disabledIconColor: spec.disabledIconColor,
-              disabledMouseCursor: spec.disabledMouseCursor,
-              splashFactory: spec.splashFactory,
-              surfaceTintColor: spec.surfaceTintColor,
-              minimumSize: spec.minimumSize,
-              fixedSize: spec.fixedSize,
-              padding: spec.padding,
-              shape: spec.shape,
-              elevation: spec.elevation,
-              textStyle: spec.textStyle,
-            ),
-            onPressed: onPressed,
-            onLongPress: onLongPress,
-            onHover: onHover,
-            onFocusChange: onFocusChange,
-            icon: icon != null ? Icon(icon) : null,
-            label: label != null ? Text(label!) : const SizedBox.shrink(),
-          ),
+          child: StatefulBuilder(builder: (context, setState) {
+            return ElevatedButton.icon(
+              iconAlignment: (spec.iconOnRight ?? false) ? IconAlignment.end : IconAlignment.start,
+              style: ElevatedButton.styleFrom(
+                foregroundColor: spec.foregroundColor,
+                backgroundColor: spec.backgroundColor,
+                disabledBackgroundColor: spec.disabledBackgroundColor,
+                disabledForegroundColor: spec.disabledForegroundColor,
+                shadowColor: spec.shadowColor,
+                overlayColor: spec.overlayColor,
+                iconColor: spec.iconColor,
+                side: spec.side,
+                alignment: spec.alignment,
+                disabledIconColor: spec.disabledIconColor,
+                disabledMouseCursor: spec.disabledMouseCursor,
+                splashFactory: spec.splashFactory,
+                surfaceTintColor: spec.surfaceTintColor,
+                minimumSize: spec.minimumSize,
+                fixedSize: spec.fixedSize,
+                padding: spec.padding,
+                shape: spec.shape,
+                elevation: spec.elevation,
+                textStyle: spec.textStyle,
+              ),
+              onPressed: isLoading
+                  ? null
+                  : () async {
+                      setState(() => isLoading = true);
+                      if (onPressed != null) await onPressed!();
+                      setState(() => isLoading = false);
+                    },
+              onLongPress: onLongPress,
+              onHover: onHover,
+              onFocusChange: onFocusChange,
+              icon: isLoading ? null : (icon != null ? Icon(icon) : null),
+              label: isLoading
+                  ? const Progress()
+                  : label != null
+                      ? Text(label!)
+                      : const SizedBox.shrink(),
+            );
+          }),
         );
       },
     );
