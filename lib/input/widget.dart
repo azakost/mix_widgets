@@ -301,6 +301,13 @@ class _InputClearState extends State<_InputClear> {
   }
 
   @override
+  void dispose() {
+    widget.controller.removeListener(() {});
+    widget.focusNode?.removeListener(() {});
+    super.dispose();
+  }
+
+  @override
   void initState() {
     widget.controller.addListener(() {
       showClear = widget.controller.text.isNotEmpty;
