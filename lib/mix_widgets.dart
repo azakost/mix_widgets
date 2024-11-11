@@ -1,7 +1,6 @@
 library mix_widgets;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'package:mix/mix.dart';
+export 'package:mix_widgets/custom_extensions.dart';
+export 'package:mix_widgets/custom_utilities.dart';
+export 'package:mix_widgets/input/widget.dart';
