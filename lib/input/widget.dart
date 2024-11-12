@@ -1,6 +1,6 @@
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
+import 'package:mix_widgets/mix_widgets.dart';
 
 import '../wrapper_modifier.dart';
 import 'spec.dart';
@@ -98,8 +98,9 @@ class Input<T> extends StatelessWidget {
     required Widget Function(BuildContext context, T item) buildItems,
     Duration debounceDuration = const Duration(milliseconds: 500),
     int minSearchLength = 3,
-    String? emptyText,
-    String? idleText,
+    String emptyText = 'No matches found',
+    String idleText = 'Enter text to search',
+    String cancelText = 'Cancel',
     bool? enabled,
     TextEditingController? controller,
     FocusNode? focusNode,
@@ -176,6 +177,7 @@ class Input<T> extends StatelessWidget {
       onTap: () {
         onTap?.call();
         Widget buildAutocomplete(BuildContext context) {
+          var oldValue = textController.text;
           return SpecBuilder(
               style: style ?? Style(),
               builder: (context) {
@@ -185,21 +187,8 @@ class Input<T> extends StatelessWidget {
                   body: SafeArea(
                     child: Column(
                       children: [
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onVerticalDragStart: (_) => Navigator.of(context).pop(),
-                          onTap: () => Navigator.of(context).pop(),
-                          child: Container(
-                            width: double.infinity,
-                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 64),
-                            child: Icon(
-                              spec.autocompelteHandle ?? Icons.drag_handle_rounded,
-                              color: spec.autocompelteHandleColor,
-                              size: spec.autocompelteHandleSize,
-                            ),
-                          ),
-                        ),
-                        Input.withClear(
+                        const SizedBox(height: 16),
+                        Input(
                           canRequestFocus: true,
                           readOnly: false,
                           autofocus: true,
@@ -236,6 +225,16 @@ class Input<T> extends StatelessWidget {
                           suffix: suffix,
                           suffixText: suffixText,
                           prefixText: prefixText,
+                          suffixIcon: TextButton(
+                            onPressed: () {
+                              textController.text = oldValue;
+                              Navigator.of(context).pop();
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.all(6),
+                              child: Text(cancelText),
+                            ),
+                          ),
                         ),
                         const SizedBox(height: 16),
                         Expanded(
@@ -245,8 +244,8 @@ class Input<T> extends StatelessWidget {
                               child: _AutocompleteBody<T>(
                                 textController: textController,
                                 minSearchLength: minSearchLength,
-                                idleText: idleText ?? 'Введите текст для поиска',
-                                emptyText: emptyText ?? 'Совпадений не найдено',
+                                idleText: idleText,
+                                emptyText: emptyText,
                                 debounceDuration: debounceDuration,
                                 getItems: items,
                                 buildItems: buildItems,
@@ -309,6 +308,7 @@ class Input<T> extends StatelessWidget {
     bool unfocusOnTapOutside = true,
     Widget? suffix,
     String? prefixText,
+    Widget? widgetAfterClear,
   }) {
     final textController = controller ?? TextEditingController();
     final focus = focusNode ?? FocusNode();
@@ -332,7 +332,7 @@ class Input<T> extends StatelessWidget {
       helper: helper,
       error: error,
       prefix: prefix,
-      suffixIcon: _InputClear(textController, focus),
+      suffixIcon: _InputClear(textController, focus, otherWidget: widgetAfterClear ?? const SizedBox()),
       prefixIcon: prefixIcon,
       counter: counter,
       inherit: inherit,

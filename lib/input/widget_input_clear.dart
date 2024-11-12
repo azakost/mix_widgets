@@ -3,8 +3,13 @@ part of 'widget.dart';
 class _InputClear extends StatefulWidget {
   final TextEditingController controller;
   final FocusNode? focusNode;
+  final Widget otherWidget;
 
-  const _InputClear(this.controller, this.focusNode);
+  const _InputClear(
+    this.controller,
+    this.focusNode, {
+    this.otherWidget = const SizedBox(),
+  });
 
   @override
   State<_InputClear> createState() => _InputClearState();
@@ -30,7 +35,7 @@ class _InputClearState extends State<_InputClear> {
         ),
       );
     } else {
-      return const SizedBox();
+      return widget.otherWidget;
     }
   }
 
