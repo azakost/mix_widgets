@@ -13,6 +13,7 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final double toolbarHeight;
+  final Style? style;
   const TopBar({
     super.key,
     this.title,
@@ -22,6 +23,7 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
     this.actions,
     this.bottom,
     this.toolbarHeight = kToolbarHeight,
+    this.style,
   });
 
   @override
@@ -39,9 +41,11 @@ class TopBar extends StatefulWidget implements PreferredSizeWidget {
     double toolbarHeight = kToolbarHeight,
     double? expandedHeight,
     Future<void> Function()? onStretchTrigger,
+    Style? style,
   }) {
     return SpecBuilder(
-      inherit: true,
+      style: style ?? const Style.empty(),
+      inherit: style == null,
       builder: (context) {
         final spec = AppBarSpec.of(context);
         return SliverAppBar(
@@ -95,7 +99,8 @@ class _TopBarState extends State<TopBar> {
   @override
   Widget build(BuildContext context) {
     return SpecBuilder(
-      inherit: true,
+      style: widget.style ?? const Style.empty(),
+      inherit: widget.style == null,
       builder: (context) {
         final spec = AppBarSpec.of(context);
         return AppBar(

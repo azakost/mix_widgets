@@ -11,6 +11,7 @@ dependencies:
   mix: ^1.5.2
   flutter:
     sdk: flutter
+  easy_debounce: ^2.0.3
 
 dev_dependencies:
   flutter_lints: ^4.0.0

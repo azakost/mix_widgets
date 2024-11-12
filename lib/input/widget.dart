@@ -1,13 +1,20 @@
+import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
-import 'package:mix_widgets/mix_widgets.dart';
-import 'package:mix_widgets/wrapper_modifier.dart';
+import 'package:mix/mix.dart';
 
+import '../wrapper_modifier.dart';
 import 'spec.dart';
+
+part 'widget_autocomplete.dart';
+part 'widget_input_clear.dart';
 
 final $input = InputSpecUtility((v) => v);
 
-class Input extends StatelessWidget {
+class Input<T> extends StatelessWidget {
   final bool? enabled;
+  final bool? autofocus;
+  final bool? readOnly;
+  final bool? canRequestFocus;
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final Object groupId;
@@ -18,6 +25,7 @@ class Input extends StatelessWidget {
   final String? errorText;
   final String? counterText;
   final String? semanticCounterText;
+  final String? suffixText;
   final Widget? label;
   final Widget? icon;
   final Widget? helper;
@@ -40,6 +48,7 @@ class Input extends StatelessWidget {
   final UndoHistoryController? undoController;
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
   final bool unfocusOnTapOutside;
+  final String? prefixText;
 
   const Input({
     super.key,
@@ -76,9 +85,21 @@ class Input extends StatelessWidget {
     this.undoController,
     this.contextMenuBuilder,
     this.unfocusOnTapOutside = true,
+    this.autofocus,
+    this.readOnly,
+    this.suffixText,
+    this.prefixText,
+    this.canRequestFocus,
   });
 
-  factory Input.withClear({
+  factory Input.autocomplete({
+    required BuildContext context,
+    required Future<List<T>> Function(String value) items,
+    required Widget Function(BuildContext context, T item) buildItems,
+    Duration debounceDuration = const Duration(milliseconds: 500),
+    int minSearchLength = 3,
+    String? emptyText,
+    String? idleText,
     bool? enabled,
     TextEditingController? controller,
     FocusNode? focusNode,
@@ -90,6 +111,7 @@ class Input extends StatelessWidget {
     String? errorText,
     String? counterText,
     String? semanticCounterText,
+    String? suffixText,
     Widget? label,
     Widget? icon,
     Widget? helper,
@@ -110,10 +132,180 @@ class Input extends StatelessWidget {
     UndoHistoryController? undoController,
     Widget Function(BuildContext, EditableTextState)? contextMenuBuilder,
     bool unfocusOnTapOutside = true,
+    Widget? suffix,
+    String? prefixText,
+  }) {
+    final textController = controller ?? TextEditingController();
+    return Input(
+      canRequestFocus: false,
+      readOnly: true,
+      autofocus: false,
+      enabled: enabled,
+      controller: textController,
+      focusNode: focusNode,
+      groupId: groupId,
+      initialValue: initialValue,
+      forceErrorText: forceErrorText,
+      labelText: labelText,
+      hintText: hintText,
+      errorText: errorText,
+      counterText: counterText,
+      semanticCounterText: semanticCounterText,
+      label: label,
+      icon: icon,
+      helper: helper,
+      error: error,
+      prefix: prefix,
+      prefixIcon: prefixIcon,
+      counter: counter,
+      inherit: inherit,
+      style: style,
+      onChanged: onChanged,
+      onTapOutside: onTapOutside,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onFieldSubmitted,
+      onSaved: onSaved,
+      validator: validator,
+      scrollController: scrollController,
+      undoController: undoController,
+      contextMenuBuilder: contextMenuBuilder,
+      unfocusOnTapOutside: unfocusOnTapOutside,
+      suffix: suffix,
+      suffixText: suffixText,
+      prefixText: prefixText,
+      onTap: () {
+        onTap?.call();
+        Widget buildAutocomplete(BuildContext context) {
+          return Scaffold(
+            backgroundColor: Colors.grey.shade200,
+            body: SafeArea(
+              child: Column(
+                children: [
+                  GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onVerticalDragStart: (_) => Navigator.of(context).pop(),
+                    onTap: () => Navigator.of(context).pop(),
+                    child: Container(
+                      width: double.infinity,
+                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 64),
+                      child: Icon(Icons.drag_handle_rounded, color: Colors.grey.shade600),
+                    ),
+                  ),
+                  Input.withClear(
+                    canRequestFocus: true,
+                    readOnly: false,
+                    autofocus: true,
+                    enabled: enabled,
+                    controller: textController,
+                    focusNode: focusNode,
+                    groupId: groupId,
+                    initialValue: initialValue,
+                    forceErrorText: forceErrorText,
+                    labelText: labelText,
+                    hintText: hintText,
+                    errorText: errorText,
+                    counterText: counterText,
+                    semanticCounterText: semanticCounterText,
+                    label: label,
+                    icon: icon,
+                    helper: helper,
+                    error: error,
+                    prefix: prefix,
+                    prefixIcon: prefixIcon,
+                    counter: counter,
+                    inherit: inherit,
+                    style: style,
+                    onChanged: onChanged,
+                    onTapOutside: onTapOutside,
+                    onEditingComplete: onEditingComplete,
+                    onFieldSubmitted: onFieldSubmitted,
+                    onSaved: onSaved,
+                    validator: validator,
+                    scrollController: scrollController,
+                    undoController: undoController,
+                    contextMenuBuilder: contextMenuBuilder,
+                    unfocusOnTapOutside: false,
+                    suffix: suffix,
+                    suffixText: suffixText,
+                    prefixText: prefixText,
+                  ),
+                  const SizedBox(height: 16),
+                  Expanded(
+                    child: ColoredBox(
+                      color: Colors.white,
+                      child: SafeArea(
+                        child: _AutocompleteBody<T>(
+                          textController: textController,
+                          minSearchLength: minSearchLength,
+                          idleText: idleText ?? 'Введите текст для поиска',
+                          debounceDuration: debounceDuration,
+                          getItems: items,
+                          buildItems: buildItems,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            fullscreenDialog: true,
+            builder: buildAutocomplete,
+          ),
+        );
+      },
+    );
+  }
+
+  factory Input.withClear({
+    bool? enabled,
+    bool? autofocus,
+    bool? readOnly,
+    bool? canRequestFocus,
+    TextEditingController? controller,
+    FocusNode? focusNode,
+    Object groupId = EditableText,
+    String? initialValue,
+    String? forceErrorText,
+    String? labelText,
+    String? hintText,
+    String? errorText,
+    String? counterText,
+    String? semanticCounterText,
+    String? suffixText,
+    Widget? label,
+    Widget? icon,
+    Widget? helper,
+    Widget? error,
+    Widget? prefix,
+    Widget? prefixIcon,
+    Widget? counter,
+    bool inherit = false,
+    Style? style,
+    Function(String)? onChanged,
+    Function()? onTap,
+    Function(PointerDownEvent)? onTapOutside,
+    Function()? onEditingComplete,
+    Function(String)? onFieldSubmitted,
+    Function(String?)? onSaved,
+    String? Function(String?)? validator,
+    ScrollController? scrollController,
+    UndoHistoryController? undoController,
+    Widget Function(BuildContext, EditableTextState)? contextMenuBuilder,
+    bool unfocusOnTapOutside = true,
+    Widget? suffix,
+    String? prefixText,
   }) {
     final textController = controller ?? TextEditingController();
     final focus = focusNode ?? FocusNode();
     return Input(
+      canRequestFocus: canRequestFocus,
+      readOnly: readOnly,
+      autofocus: autofocus,
       enabled: enabled,
       controller: textController,
       focusNode: focus,
@@ -150,6 +342,10 @@ class Input extends StatelessWidget {
       scrollController: scrollController,
       undoController: undoController,
       contextMenuBuilder: contextMenuBuilder,
+      suffix: suffix,
+      unfocusOnTapOutside: unfocusOnTapOutside,
+      suffixText: suffixText,
+      prefixText: prefixText,
     );
   }
 
@@ -164,6 +360,7 @@ class Input extends StatelessWidget {
         return WrapperModifier(
           modifiers: [...(spec.modifiers?.value ?? [])],
           child: TextFormField(
+            canRequestFocus: canRequestFocus ?? spec.canRequestFocus ?? true,
             keyboardType: spec.keyboardType,
             textCapitalization: spec.textCapitalization ?? TextCapitalization.none,
             textInputAction: TextInputAction.next,
@@ -177,9 +374,9 @@ class Input extends StatelessWidget {
             textAlign: spec.textAlign ?? TextAlign.start,
             textAlignVertical: spec.textAlignVertical,
             textDirection: spec.textDirection,
-            readOnly: spec.readOnly ?? false,
+            readOnly: readOnly ?? spec.readOnly ?? false,
             showCursor: spec.showCursor,
-            autofocus: spec.autofocus ?? false,
+            autofocus: autofocus ?? spec.autofocus ?? false,
             obscureText: spec.obscureText ?? false,
             autocorrect: spec.autocorrect ?? true,
             enableSuggestions: spec.enableSuggestions ?? true,
@@ -249,6 +446,10 @@ class Input extends StatelessWidget {
               hoverColor: spec.hoverColor,
               suffixIconColor: spec.suffixIconColor,
               prefixIconColor: spec.prefixIconColor,
+              constraints: spec.constraints,
+              suffixText: suffixText,
+              iconColor: spec.iconColor,
+              prefixText: prefixText,
             ),
           ),
         );
@@ -282,60 +483,5 @@ class InputLabel extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _InputClear extends StatefulWidget {
-  final TextEditingController controller;
-  final FocusNode? focusNode;
-
-  const _InputClear(this.controller, this.focusNode);
-
-  @override
-  State<_InputClear> createState() => _InputClearState();
-}
-
-class _InputClearState extends State<_InputClear> {
-  bool showClear = false;
-
-  @override
-  Widget build(BuildContext context) {
-    if (showClear) {
-      return IconButton(
-        onPressed: () {
-          widget.controller.clear();
-          setState(() {});
-        },
-        icon: SpecBuilder(
-          inherit: true,
-          builder: (context) {
-            final spec = InputSpec.of(context);
-            return Icon(spec.clearIcon ?? Icons.clear);
-          },
-        ),
-      );
-    } else {
-      return const SizedBox();
-    }
-  }
-
-  @override
-  void dispose() {
-    widget.controller.removeListener(() {});
-    widget.focusNode?.removeListener(() {});
-    super.dispose();
-  }
-
-  @override
-  void initState() {
-    widget.controller.addListener(() {
-      showClear = widget.controller.text.isNotEmpty;
-      setState(() {});
-    });
-    widget.focusNode?.addListener(() {
-      showClear = widget.focusNode!.hasFocus && widget.controller.text.isNotEmpty;
-      setState(() {});
-    });
-    super.initState();
   }
 }
