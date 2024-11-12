@@ -19,8 +19,8 @@ class Progress extends StatelessWidget {
       builder: (context) {
         final spec = ProgressSpec.of(context);
         return SizedBox(
-          width: spec.size,
-          height: spec.size,
+          width: spec.size ?? 20,
+          height: spec.size ?? 20,
           child: (spec.iosStyle ?? true)
               ? CupertinoActivityIndicator(
                   color: spec.color,

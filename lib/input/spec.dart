@@ -93,6 +93,9 @@ base class InputSpec extends Spec<InputSpec> {
   final bool? alignLabelWithHint;
   final BoxConstraints? constraints;
   final IconData? clearIcon;
+  final double? labelIconGap;
+  final Color? labelIconColor;
+  final double? labelIconSize;
 
   const InputSpec({
     this.fillColor,
@@ -180,6 +183,9 @@ base class InputSpec extends Spec<InputSpec> {
     this.alignLabelWithHint,
     this.constraints,
     this.clearIcon,
+    this.labelIconGap,
+    this.labelIconColor,
+    this.labelIconSize,
     super.modifiers,
     super.animated,
   });
@@ -271,6 +277,8 @@ base class InputSpec extends Spec<InputSpec> {
         alignLabelWithHint,
         constraints,
         clearIcon,
+        labelIconGap,
+        labelIconColor,
         modifiers,
         animated,
       ];
@@ -362,6 +370,9 @@ base class InputSpec extends Spec<InputSpec> {
     bool? alignLabelWithHint,
     BoxConstraints? constraints,
     IconData? clearIcon,
+    double? labelIconGap,
+    Color? labelIconColor,
+    double? labelIconSize,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -451,6 +462,9 @@ base class InputSpec extends Spec<InputSpec> {
       alignLabelWithHint: alignLabelWithHint ?? this.alignLabelWithHint,
       constraints: constraints ?? this.constraints,
       clearIcon: clearIcon ?? this.clearIcon,
+      labelIconGap: labelIconGap ?? this.labelIconGap,
+      labelIconColor: labelIconColor ?? this.labelIconColor,
+      labelIconSize: labelIconSize ?? this.labelIconSize,
       modifiers: modifiers ?? this.modifiers,
       animated: animated ?? this.animated,
     );
@@ -545,6 +559,9 @@ base class InputSpec extends Spec<InputSpec> {
       alignLabelWithHint: t < 0.5 ? alignLabelWithHint : other.alignLabelWithHint,
       constraints: BoxConstraints.lerp(constraints, other.constraints, t),
       clearIcon: clearIcon ?? other.clearIcon,
+      labelIconGap: lerpDouble(labelIconGap, other.labelIconGap, t),
+      labelIconColor: Color.lerp(labelIconColor, other.labelIconColor, t),
+      labelIconSize: lerpDouble(labelIconSize, other.labelIconSize, t),
       modifiers: t < 0.5 ? modifiers : other.modifiers,
       animated: t < 0.5 ? animated : other.animated,
     );
@@ -642,6 +659,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final bool? alignLabelWithHint;
   final BoxConstraintsDto? constraints;
   final IconData? clearIcon;
+  final double? labelIconGap;
+  final ColorDto? labelIconColor;
+  final double? labelIconSize;
 
   const InputSpecAttribute({
     this.fillColor,
@@ -729,6 +749,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.alignLabelWithHint,
     this.constraints,
     this.clearIcon,
+    this.labelIconGap,
+    this.labelIconColor,
+    this.labelIconSize,
     super.modifiers,
     super.animated,
   });
@@ -820,6 +843,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         alignLabelWithHint,
         constraints,
         clearIcon,
+        labelIconGap,
+        labelIconColor,
+        labelIconSize,
         modifiers,
         animated,
       ];
@@ -913,6 +939,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       alignLabelWithHint: alignLabelWithHint ?? other.alignLabelWithHint,
       constraints: constraints?.merge(other.constraints) ?? other.constraints,
       clearIcon: clearIcon ?? other.clearIcon,
+      labelIconGap: labelIconGap ?? other.labelIconGap,
+      labelIconColor: labelIconColor?.merge(other.labelIconColor) ?? other.labelIconColor,
+      labelIconSize: labelIconSize ?? other.labelIconSize,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated ?? other.animated,
     );
@@ -1006,6 +1035,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       alignLabelWithHint: alignLabelWithHint,
       constraints: constraints?.resolve(mix),
       clearIcon: clearIcon,
+      labelIconGap: labelIconGap,
+      labelIconColor: labelIconColor?.resolve(mix),
+      labelIconSize: labelIconSize,
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -1098,6 +1130,9 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
   late final alignLabelWithHint = BoolUtility((v) => only(alignLabelWithHint: v));
   late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
   late final clearIcon = ((v) => only(clearIcon: v));
+  late final labelIconGap = DoubleUtility((v) => only(labelIconGap: v));
+  late final labelIconColor = ColorUtility((v) => only(labelIconColor: v));
+  late final labelIconSize = DoubleUtility((v) => only(labelIconSize: v));
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   InputSpecUtility(super.builder);
@@ -1189,6 +1224,9 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
     bool? alignLabelWithHint,
     BoxConstraintsDto? constraints,
     IconData? clearIcon,
+    double? labelIconGap,
+    ColorDto? labelIconColor,
+    double? labelIconSize,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
@@ -1278,6 +1316,9 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
       alignLabelWithHint: alignLabelWithHint,
       constraints: constraints,
       clearIcon: clearIcon,
+      labelIconGap: labelIconGap,
+      labelIconColor: labelIconColor,
+      labelIconSize: labelIconSize,
       modifiers: modifiers,
       animated: animated,
     ));

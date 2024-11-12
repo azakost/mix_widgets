@@ -39,6 +39,7 @@ class Input extends StatelessWidget {
   final ScrollController? scrollController;
   final UndoHistoryController? undoController;
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
+  final bool unfocusOnTapOutside;
 
   const Input({
     super.key,
@@ -74,6 +75,7 @@ class Input extends StatelessWidget {
     this.scrollController,
     this.undoController,
     this.contextMenuBuilder,
+    this.unfocusOnTapOutside = true,
   });
 
   factory Input.withClear({
@@ -107,6 +109,7 @@ class Input extends StatelessWidget {
     ScrollController? scrollController,
     UndoHistoryController? undoController,
     Widget Function(BuildContext, EditableTextState)? contextMenuBuilder,
+    bool unfocusOnTapOutside = true,
   }) {
     final textController = controller ?? TextEditingController();
     final focus = focusNode ?? FocusNode();
@@ -134,7 +137,12 @@ class Input extends StatelessWidget {
       style: style,
       onChanged: onChanged,
       onTap: onTap,
-      onTapOutside: onTapOutside,
+      onTapOutside: unfocusOnTapOutside
+          ? (x) {
+              focus.unfocus();
+              onTapOutside?.call(x);
+            }
+          : onTapOutside,
       onEditingComplete: onEditingComplete,
       onFieldSubmitted: onFieldSubmitted,
       onSaved: onSaved,
@@ -147,6 +155,7 @@ class Input extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final focus = focusNode ?? FocusNode();
     return SpecBuilder(
       style: style ?? Style(),
       inherit: inherit,
@@ -159,7 +168,7 @@ class Input extends StatelessWidget {
             textCapitalization: spec.textCapitalization ?? TextCapitalization.none,
             textInputAction: TextInputAction.next,
             controller: controller,
-            focusNode: focusNode,
+            focusNode: focus,
             groupId: groupId,
             initialValue: initialValue,
             forceErrorText: forceErrorText,
@@ -181,7 +190,12 @@ class Input extends StatelessWidget {
             maxLengthEnforcement: spec.maxLengthEnforcement,
             onChanged: onChanged,
             onTap: onTap,
-            onTapOutside: onTapOutside,
+            onTapOutside: unfocusOnTapOutside
+                ? (x) {
+                    focus.unfocus();
+                    onTapOutside?.call(x);
+                  }
+                : onTapOutside,
             onEditingComplete: onEditingComplete,
             onFieldSubmitted: onFieldSubmitted,
             onSaved: onSaved,
@@ -246,22 +260,27 @@ class Input extends StatelessWidget {
 class InputLabel extends StatelessWidget {
   final IconData? icon;
   final String text;
-  final double? gap;
+
   const InputLabel(
     this.text, {
     super.key,
     this.icon,
-    this.gap = 8,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (icon != null) Icon(icon),
-        if (icon != null) SizedBox(width: gap),
-        Text(text),
-      ],
+    return SpecBuilder(
+      inherit: true,
+      builder: (context) {
+        final spec = InputSpec.of(context);
+        return Row(
+          children: [
+            if (icon != null) Icon(icon, size: spec.labelIconSize, color: spec.labelIconColor),
+            if (icon != null) SizedBox(width: spec.labelIconGap ?? 4),
+            Text(text),
+          ],
+        );
+      },
     );
   }
 }

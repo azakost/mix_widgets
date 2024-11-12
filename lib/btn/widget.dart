@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:mix/mix.dart';
 
 import '../progress/widget.dart';
@@ -65,6 +66,7 @@ class Btn extends StatelessWidget {
               onPressed: isLoading
                   ? null
                   : () async {
+                      HapticFeedback.mediumImpact();
                       setState(() => isLoading = true);
                       if (onPressed != null) await onPressed!();
                       setState(() => isLoading = false);

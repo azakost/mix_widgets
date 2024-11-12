@@ -17,6 +17,7 @@ class Home extends StatelessWidget {
         children: [
           Input.withClear(
             label: const InputLabel('Phone Number', icon: Icons.phone),
+            onTapOutside: (x) {},
             style: Style(
               $input.fillColor.white(),
               $input.filled.on(),
@@ -31,6 +32,9 @@ class Home extends StatelessWidget {
               $input.focusedErrorBorder.outlineLabelInside(radius: 12, color: Colors.red, width: 1.5),
               $input.contentPadding.symmetrical(8, 16),
               $input.suffixIconColor.grey.shade400(),
+              $input.labelIconSize(20),
+              $input.labelIconGap(6),
+              $input.labelIconColor.red(),
 
               // $input.inputFormatters([]),
             ),
