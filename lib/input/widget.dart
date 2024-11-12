@@ -92,8 +92,8 @@ class Input<T> extends StatelessWidget {
     this.canRequestFocus,
   });
 
-  factory Input.autocomplete({
-    required BuildContext context,
+  factory Input.autocomplete(
+    BuildContext context, {
     required Future<List<T>> Function(String value) items,
     required Widget Function(BuildContext context, T item) buildItems,
     Duration debounceDuration = const Duration(milliseconds: 500),
@@ -176,79 +176,89 @@ class Input<T> extends StatelessWidget {
       onTap: () {
         onTap?.call();
         Widget buildAutocomplete(BuildContext context) {
-          return Scaffold(
-            backgroundColor: Colors.grey.shade200,
-            body: SafeArea(
-              child: Column(
-                children: [
-                  GestureDetector(
-                    behavior: HitTestBehavior.opaque,
-                    onVerticalDragStart: (_) => Navigator.of(context).pop(),
-                    onTap: () => Navigator.of(context).pop(),
-                    child: Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 64),
-                      child: Icon(Icons.drag_handle_rounded, color: Colors.grey.shade600),
-                    ),
-                  ),
-                  Input.withClear(
-                    canRequestFocus: true,
-                    readOnly: false,
-                    autofocus: true,
-                    enabled: enabled,
-                    controller: textController,
-                    focusNode: focusNode,
-                    groupId: groupId,
-                    initialValue: initialValue,
-                    forceErrorText: forceErrorText,
-                    labelText: labelText,
-                    hintText: hintText,
-                    errorText: errorText,
-                    counterText: counterText,
-                    semanticCounterText: semanticCounterText,
-                    label: label,
-                    icon: icon,
-                    helper: helper,
-                    error: error,
-                    prefix: prefix,
-                    prefixIcon: prefixIcon,
-                    counter: counter,
-                    inherit: inherit,
-                    style: style,
-                    onChanged: onChanged,
-                    onTapOutside: onTapOutside,
-                    onEditingComplete: onEditingComplete,
-                    onFieldSubmitted: onFieldSubmitted,
-                    onSaved: onSaved,
-                    validator: validator,
-                    scrollController: scrollController,
-                    undoController: undoController,
-                    contextMenuBuilder: contextMenuBuilder,
-                    unfocusOnTapOutside: false,
-                    suffix: suffix,
-                    suffixText: suffixText,
-                    prefixText: prefixText,
-                  ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: ColoredBox(
-                      color: Colors.white,
-                      child: SafeArea(
-                        child: _AutocompleteBody<T>(
-                          textController: textController,
-                          minSearchLength: minSearchLength,
-                          idleText: idleText ?? 'Введите текст для поиска',
-                          debounceDuration: debounceDuration,
-                          getItems: items,
-                          buildItems: buildItems,
+          return SpecBuilder(
+              style: style ?? Style(),
+              builder: (context) {
+                final spec = InputSpec.of(context);
+                return Scaffold(
+                  backgroundColor: spec.autocompelteHeaderColor,
+                  body: SafeArea(
+                    child: Column(
+                      children: [
+                        GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onVerticalDragStart: (_) => Navigator.of(context).pop(),
+                          onTap: () => Navigator.of(context).pop(),
+                          child: Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 64),
+                            child: Icon(
+                              spec.autocompelteHandle ?? Icons.drag_handle_rounded,
+                              color: spec.autocompelteHandleColor,
+                              size: spec.autocompelteHandleSize,
+                            ),
+                          ),
                         ),
-                      ),
+                        Input.withClear(
+                          canRequestFocus: true,
+                          readOnly: false,
+                          autofocus: true,
+                          enabled: enabled,
+                          controller: textController,
+                          focusNode: focusNode,
+                          groupId: groupId,
+                          initialValue: initialValue,
+                          forceErrorText: forceErrorText,
+                          labelText: labelText,
+                          hintText: hintText,
+                          errorText: errorText,
+                          counterText: counterText,
+                          semanticCounterText: semanticCounterText,
+                          label: label,
+                          icon: icon,
+                          helper: helper,
+                          error: error,
+                          prefix: prefix,
+                          prefixIcon: prefixIcon,
+                          counter: counter,
+                          inherit: inherit,
+                          style: style,
+                          onChanged: onChanged,
+                          onTapOutside: onTapOutside,
+                          onEditingComplete: onEditingComplete,
+                          onFieldSubmitted: onFieldSubmitted,
+                          onSaved: onSaved,
+                          validator: validator,
+                          scrollController: scrollController,
+                          undoController: undoController,
+                          contextMenuBuilder: contextMenuBuilder,
+                          unfocusOnTapOutside: false,
+                          suffix: suffix,
+                          suffixText: suffixText,
+                          prefixText: prefixText,
+                        ),
+                        const SizedBox(height: 16),
+                        Expanded(
+                          child: ColoredBox(
+                            color: spec.autocompelteBackgroundColor ?? Colors.white,
+                            child: SafeArea(
+                              child: _AutocompleteBody<T>(
+                                textController: textController,
+                                minSearchLength: minSearchLength,
+                                idleText: idleText ?? 'Введите текст для поиска',
+                                emptyText: emptyText ?? 'Совпадений не найдено',
+                                debounceDuration: debounceDuration,
+                                getItems: items,
+                                buildItems: buildItems,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          );
+                );
+              });
         }
 
         Navigator.of(context).push(

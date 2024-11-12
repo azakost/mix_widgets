@@ -27,6 +27,9 @@ class Home extends StatelessWidget {
       $input.labelIconSize(20),
       $input.labelIconGap(6),
       $input.labelIconColor.red(),
+      $input.autocompelteHintStyle.color.grey.shade400(),
+      $input.autocompelteDividerColor.red(),
+      $input.autocompelteLoaderColor.yellow(),
 
       // $input.inputFormatters([]),
     );
@@ -36,12 +39,11 @@ class Home extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Input<int>.autocomplete(
-            context: context,
+            context,
             label: const InputLabel('Phone Number', icon: Icons.phone),
             buildItems: (context, item) {
               return ListTile(title: Text(item.toString()));
             },
-            emptyText: 'Начните вводить номер',
             style: style,
             items: (x) async {
               await Future.delayed(const Duration(seconds: 1));

@@ -96,6 +96,14 @@ base class InputSpec extends Spec<InputSpec> {
   final double? labelIconGap;
   final Color? labelIconColor;
   final double? labelIconSize;
+  final Color? autocompelteDividerColor;
+  final Color? autocompelteLoaderColor;
+  final Color? autocompelteHeaderColor;
+  final Color? autocompelteBackgroundColor;
+  final Color? autocompelteHandleColor;
+  final double? autocompelteHandleSize;
+  final IconData? autocompelteHandle;
+  final TextStyle? autocompelteHintStyle;
 
   const InputSpec({
     this.fillColor,
@@ -186,6 +194,14 @@ base class InputSpec extends Spec<InputSpec> {
     this.labelIconGap,
     this.labelIconColor,
     this.labelIconSize,
+    this.autocompelteDividerColor,
+    this.autocompelteLoaderColor,
+    this.autocompelteHeaderColor,
+    this.autocompelteBackgroundColor,
+    this.autocompelteHandleColor,
+    this.autocompelteHandleSize,
+    this.autocompelteHandle,
+    this.autocompelteHintStyle,
     super.modifiers,
     super.animated,
   });
@@ -279,6 +295,15 @@ base class InputSpec extends Spec<InputSpec> {
         clearIcon,
         labelIconGap,
         labelIconColor,
+        labelIconSize,
+        autocompelteDividerColor,
+        autocompelteLoaderColor,
+        autocompelteHeaderColor,
+        autocompelteBackgroundColor,
+        autocompelteHandleColor,
+        autocompelteHandleSize,
+        autocompelteHandle,
+        autocompelteHintStyle,
         modifiers,
         animated,
       ];
@@ -373,6 +398,14 @@ base class InputSpec extends Spec<InputSpec> {
     double? labelIconGap,
     Color? labelIconColor,
     double? labelIconSize,
+    Color? autocompelteDividerColor,
+    Color? autocompelteLoaderColor,
+    Color? autocompelteHeaderColor,
+    Color? autocompelteBackgroundColor,
+    Color? autocompelteHandleColor,
+    double? autocompelteHandleSize,
+    IconData? autocompelteHandle,
+    TextStyle? autocompelteHintStyle,
     WidgetModifiersData? modifiers,
     AnimatedData? animated,
   }) {
@@ -465,6 +498,14 @@ base class InputSpec extends Spec<InputSpec> {
       labelIconGap: labelIconGap ?? this.labelIconGap,
       labelIconColor: labelIconColor ?? this.labelIconColor,
       labelIconSize: labelIconSize ?? this.labelIconSize,
+      autocompelteDividerColor: autocompelteDividerColor ?? this.autocompelteDividerColor,
+      autocompelteLoaderColor: autocompelteLoaderColor ?? this.autocompelteLoaderColor,
+      autocompelteHeaderColor: autocompelteHeaderColor ?? this.autocompelteHeaderColor,
+      autocompelteBackgroundColor: autocompelteBackgroundColor ?? this.autocompelteBackgroundColor,
+      autocompelteHandleColor: autocompelteHandleColor ?? this.autocompelteHandleColor,
+      autocompelteHandleSize: autocompelteHandleSize ?? this.autocompelteHandleSize,
+      autocompelteHandle: autocompelteHandle ?? this.autocompelteHandle,
+      autocompelteHintStyle: autocompelteHintStyle ?? this.autocompelteHintStyle,
       modifiers: modifiers ?? this.modifiers,
       animated: animated ?? this.animated,
     );
@@ -562,6 +603,14 @@ base class InputSpec extends Spec<InputSpec> {
       labelIconGap: lerpDouble(labelIconGap, other.labelIconGap, t),
       labelIconColor: Color.lerp(labelIconColor, other.labelIconColor, t),
       labelIconSize: lerpDouble(labelIconSize, other.labelIconSize, t),
+      autocompelteDividerColor: Color.lerp(autocompelteDividerColor, other.autocompelteDividerColor, t),
+      autocompelteLoaderColor: Color.lerp(autocompelteLoaderColor, other.autocompelteLoaderColor, t),
+      autocompelteHeaderColor: Color.lerp(autocompelteHeaderColor, other.autocompelteHeaderColor, t),
+      autocompelteBackgroundColor: Color.lerp(autocompelteBackgroundColor, other.autocompelteBackgroundColor, t),
+      autocompelteHandleColor: Color.lerp(autocompelteHandleColor, other.autocompelteHandleColor, t),
+      autocompelteHandleSize: lerpDouble(autocompelteHandleSize, other.autocompelteHandleSize, t),
+      autocompelteHandle: autocompelteHandle ?? other.autocompelteHandle,
+      autocompelteHintStyle: TextStyle.lerp(autocompelteHintStyle, other.autocompelteHintStyle, t),
       modifiers: t < 0.5 ? modifiers : other.modifiers,
       animated: t < 0.5 ? animated : other.animated,
     );
@@ -662,6 +711,14 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final double? labelIconGap;
   final ColorDto? labelIconColor;
   final double? labelIconSize;
+  final ColorDto? autocompelteDividerColor;
+  final ColorDto? autocompelteLoaderColor;
+  final ColorDto? autocompelteHeaderColor;
+  final ColorDto? autocompelteBackgroundColor;
+  final ColorDto? autocompelteHandleColor;
+  final double? autocompelteHandleSize;
+  final IconData? autocompelteHandle;
+  final TextStyleDto? autocompelteHintStyle;
 
   const InputSpecAttribute({
     this.fillColor,
@@ -752,6 +809,14 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.labelIconGap,
     this.labelIconColor,
     this.labelIconSize,
+    this.autocompelteDividerColor,
+    this.autocompelteLoaderColor,
+    this.autocompelteHeaderColor,
+    this.autocompelteBackgroundColor,
+    this.autocompelteHandleColor,
+    this.autocompelteHandleSize,
+    this.autocompelteHandle,
+    this.autocompelteHintStyle,
     super.modifiers,
     super.animated,
   });
@@ -846,6 +911,14 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         labelIconGap,
         labelIconColor,
         labelIconSize,
+        autocompelteDividerColor,
+        autocompelteLoaderColor,
+        autocompelteHeaderColor,
+        autocompelteBackgroundColor,
+        autocompelteHandleColor,
+        autocompelteHandleSize,
+        autocompelteHandle,
+        autocompelteHintStyle,
         modifiers,
         animated,
       ];
@@ -942,6 +1015,15 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       labelIconGap: labelIconGap ?? other.labelIconGap,
       labelIconColor: labelIconColor?.merge(other.labelIconColor) ?? other.labelIconColor,
       labelIconSize: labelIconSize ?? other.labelIconSize,
+      autocompelteDividerColor: autocompelteDividerColor?.merge(other.autocompelteDividerColor) ?? other.autocompelteDividerColor,
+      autocompelteLoaderColor: autocompelteLoaderColor?.merge(other.autocompelteLoaderColor) ?? other.autocompelteLoaderColor,
+      autocompelteHeaderColor: autocompelteHeaderColor?.merge(other.autocompelteHeaderColor) ?? other.autocompelteHeaderColor,
+      autocompelteBackgroundColor:
+          autocompelteBackgroundColor?.merge(other.autocompelteBackgroundColor) ?? other.autocompelteBackgroundColor,
+      autocompelteHandleColor: autocompelteHandleColor?.merge(other.autocompelteHandleColor) ?? other.autocompelteHandleColor,
+      autocompelteHandleSize: autocompelteHandleSize ?? other.autocompelteHandleSize,
+      autocompelteHandle: autocompelteHandle ?? other.autocompelteHandle,
+      autocompelteHintStyle: autocompelteHintStyle?.merge(other.autocompelteHintStyle) ?? other.autocompelteHintStyle,
       modifiers: modifiers?.merge(other.modifiers) ?? other.modifiers,
       animated: animated ?? other.animated,
     );
@@ -1038,6 +1120,14 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       labelIconGap: labelIconGap,
       labelIconColor: labelIconColor?.resolve(mix),
       labelIconSize: labelIconSize,
+      autocompelteDividerColor: autocompelteDividerColor?.resolve(mix),
+      autocompelteLoaderColor: autocompelteLoaderColor?.resolve(mix),
+      autocompelteHeaderColor: autocompelteHeaderColor?.resolve(mix),
+      autocompelteBackgroundColor: autocompelteBackgroundColor?.resolve(mix),
+      autocompelteHandleColor: autocompelteHandleColor?.resolve(mix),
+      autocompelteHandleSize: autocompelteHandleSize,
+      autocompelteHandle: autocompelteHandle,
+      autocompelteHintStyle: autocompelteHintStyle?.resolve(mix),
       modifiers: modifiers?.resolve(mix),
       animated: animated?.resolve(mix) ?? mix.animation,
     );
@@ -1133,6 +1223,15 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
   late final labelIconGap = DoubleUtility((v) => only(labelIconGap: v));
   late final labelIconColor = ColorUtility((v) => only(labelIconColor: v));
   late final labelIconSize = DoubleUtility((v) => only(labelIconSize: v));
+  late final autocompelteDividerColor = ColorUtility((v) => only(autocompelteDividerColor: v));
+  late final autocompelteLoaderColor = ColorUtility((v) => only(autocompelteLoaderColor: v));
+  late final autocompelteHeaderColor = ColorUtility((v) => only(autocompelteHeaderColor: v));
+  late final autocompelteBackgroundColor = ColorUtility((v) => only(autocompelteBackgroundColor: v));
+  late final autocompelteHandleColor = ColorUtility((v) => only(autocompelteHandleColor: v));
+  late final autocompelteHandleSize = DoubleUtility((v) => only(autocompelteHandleSize: v));
+  late final autocompelteHandle = ((v) => only(autocompelteHandle: v));
+  late final autocompelteHintStyle = TextStyleUtility((v) => only(autocompelteHintStyle: v));
+
   late final wrap = SpecModifierUtility((v) => only(modifiers: v));
 
   InputSpecUtility(super.builder);
@@ -1227,6 +1326,14 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
     double? labelIconGap,
     ColorDto? labelIconColor,
     double? labelIconSize,
+    ColorDto? autocompelteDividerColor,
+    ColorDto? autocompelteLoaderColor,
+    ColorDto? autocompelteHeaderColor,
+    ColorDto? autocompelteBackgroundColor,
+    ColorDto? autocompelteHandleColor,
+    double? autocompelteHandleSize,
+    IconData? autocompelteHandle,
+    TextStyleDto? autocompelteHintStyle,
     WidgetModifiersDataDto? modifiers,
     AnimatedDataDto? animated,
   }) {
@@ -1319,6 +1426,14 @@ base class InputSpecUtility<T extends Attribute> extends SpecUtility<T, InputSpe
       labelIconGap: labelIconGap,
       labelIconColor: labelIconColor,
       labelIconSize: labelIconSize,
+      autocompelteDividerColor: autocompelteDividerColor,
+      autocompelteLoaderColor: autocompelteLoaderColor,
+      autocompelteHeaderColor: autocompelteHeaderColor,
+      autocompelteBackgroundColor: autocompelteBackgroundColor,
+      autocompelteHandleColor: autocompelteHandleColor,
+      autocompelteHandleSize: autocompelteHandleSize,
+      autocompelteHandle: autocompelteHandle,
+      autocompelteHintStyle: autocompelteHintStyle,
       modifiers: modifiers,
       animated: animated,
     ));
