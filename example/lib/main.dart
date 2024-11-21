@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mix_widgets/bottom_menu/widget.dart';
 import 'package:mix_widgets/mix_widgets.dart';
 
 void main() {
@@ -23,28 +24,31 @@ class Home extends StatelessWidget {
       $input.focusedErrorBorder.outlineLabelInside(radius: 12, color: Colors.red, width: 1),
       $input.contentPadding.symmetrical(8, 16),
       $input.suffixIconColor.grey.shade400(),
-      $input.labelIconSize(20),
       $input.labelIconGap(6),
+      $input.labelIconSize(20),
       $input.labelIconColor.red(),
-
-      // $input.inputFormatters([]),
+      $bottomMenu.shape.roundedRectangle.borderRadius.directional.top(8),
+      $bottomMenu.backgroundColor.yellow(),
     );
     return Scaffold(
       appBar: AppBar(title: const Text('Example')),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: VBox(
+        style: style,
         children: [
-          Input<int>.autocomplete(
-            context,
+          Input.autocomplete<int>(
+            inherit: true,
             label: const InputLabel('Phone Number', icon: Icons.phone),
             buildItems: (context, item) {
               return ListTile(title: Text(item.toString()));
             },
-            style: style,
             items: (x) async {
               await Future.delayed(const Duration(seconds: 1));
               return [1];
             },
+          ),
+          Input.dropdown(
+            inherit: true,
+            label: const InputLabel('Phone Number', icon: Icons.phone),
           ),
           Btn(
             label: 'Text',
@@ -52,15 +56,6 @@ class Home extends StatelessWidget {
             onPressed: () async {
               await Future.delayed(const Duration(seconds: 5));
             },
-            style: Style(
-              $btn.wrap.sizedBox.width.infinity(),
-              $btn.wrap.padding.horizontal(16),
-              $btn.backgroundColor.blue(),
-              $btn.foregroundColor.white(),
-              $btn.disabledBackgroundColor.grey.shade500(),
-              $progress.iosStyle.on(),
-              $progress.color.white(),
-            ),
           ),
         ],
       ),
