@@ -5,7 +5,6 @@ final $bottomMenu = BottomMenuSpecUtility((x) => x);
 
 void showBottomMenu(BuildContext context) {
   final spec = BottomMenuSpec.of(context);
-  print(spec.backgroundColor);
   showModalBottomSheet(
     context: context,
     backgroundColor: spec.backgroundColor,

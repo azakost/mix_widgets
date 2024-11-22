@@ -45,11 +45,12 @@ mixin _$InputSpec on Spec<InputSpec> {
     TextStyle? errorStyle,
     int? errorMaxLines,
     FloatingLabelBehavior? floatingLabelBehavior,
-    FloatingLabelAlignment? floatingLabelAlignmen,
+    FloatingLabelAlignment? floatingLabelAlignment,
     bool? isCollapsed,
     bool? isDense,
     EdgeInsetsGeometry? contentPadding,
-    BoxConstraints? prefixIconConstraint,
+    BoxConstraints? prefixIconConstraints,
+    BoxConstraints? constraints,
     TextStyle? prefixStyle,
     Color? prefixIconColor,
     TextStyle? suffixStyle,
@@ -100,7 +101,6 @@ mixin _$InputSpec on Spec<InputSpec> {
     EdgeInsets? scrollPadding,
     bool? enableInteractiveSelection,
     ScrollPhysics? scrollPhysics,
-    Iterable<String>? autofillHints,
     AutovalidateMode? autovalidateMode,
     bool? enableIMEPersonalizedLearning,
     MouseCursor? mouseCursor,
@@ -111,6 +111,7 @@ mixin _$InputSpec on Spec<InputSpec> {
     Clip? clipBehavior,
     bool? scribbleEnabled,
     bool? canRequestFocus,
+    bool? expands,
   }) {
     return InputSpec(
       iconColor: iconColor ?? _$this.iconColor,
@@ -126,12 +127,14 @@ mixin _$InputSpec on Spec<InputSpec> {
       errorMaxLines: errorMaxLines ?? _$this.errorMaxLines,
       floatingLabelBehavior:
           floatingLabelBehavior ?? _$this.floatingLabelBehavior,
-      floatingLabelAlignmen:
-          floatingLabelAlignmen ?? _$this.floatingLabelAlignmen,
+      floatingLabelAlignment:
+          floatingLabelAlignment ?? _$this.floatingLabelAlignment,
       isCollapsed: isCollapsed ?? _$this.isCollapsed,
       isDense: isDense ?? _$this.isDense,
       contentPadding: contentPadding ?? _$this.contentPadding,
-      prefixIconConstraint: prefixIconConstraint ?? _$this.prefixIconConstraint,
+      prefixIconConstraints:
+          prefixIconConstraints ?? _$this.prefixIconConstraints,
+      constraints: constraints ?? _$this.constraints,
       prefixStyle: prefixStyle ?? _$this.prefixStyle,
       prefixIconColor: prefixIconColor ?? _$this.prefixIconColor,
       suffixStyle: suffixStyle ?? _$this.suffixStyle,
@@ -184,7 +187,6 @@ mixin _$InputSpec on Spec<InputSpec> {
       enableInteractiveSelection:
           enableInteractiveSelection ?? _$this.enableInteractiveSelection,
       scrollPhysics: scrollPhysics ?? _$this.scrollPhysics,
-      autofillHints: autofillHints ?? _$this.autofillHints,
       autovalidateMode: autovalidateMode ?? _$this.autovalidateMode,
       enableIMEPersonalizedLearning:
           enableIMEPersonalizedLearning ?? _$this.enableIMEPersonalizedLearning,
@@ -197,6 +199,7 @@ mixin _$InputSpec on Spec<InputSpec> {
       clipBehavior: clipBehavior ?? _$this.clipBehavior,
       scribbleEnabled: scribbleEnabled ?? _$this.scribbleEnabled,
       canRequestFocus: canRequestFocus ?? _$this.canRequestFocus,
+      expands: expands ?? _$this.expands,
     );
   }
 
@@ -214,14 +217,14 @@ mixin _$InputSpec on Spec<InputSpec> {
   /// - [Color.lerp] for [iconColor] and [prefixIconColor] and [suffixIconColor] and [fillColor] and [focusColor] and [hoverColor] and [cursorColor] and [cursorErrorColor].
   /// - [MixHelpers.lerpTextStyle] for [labelStyle] and [floatingLabelStyle] and [helperStyle] and [hintStyle] and [errorStyle] and [prefixStyle] and [suffixStyle] and [counterStyle] and [style].
   /// - [EdgeInsetsGeometry.lerp] for [contentPadding].
-  /// - [BoxConstraints.lerp] for [prefixIconConstraint] and [suffixIconConstraints] and [constraint].
+  /// - [BoxConstraints.lerp] for [prefixIconConstraints] and [constraints] and [suffixIconConstraints] and [constraint].
   /// - [InputBorder.lerp] for [errorBorder] and [focusedBorder] and [focusedErrorBorder] and [disabledBorder] and [enabledBorder] and [border].
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
   /// - [MixHelpers.lerpDouble] for [cursorWidth] and [cursorHeight].
   /// - [Radius.lerp] for [cursorRadius].
   /// - [EdgeInsets.lerp] for [scrollPadding].
 
-  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignmen] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autofillHints] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus], the interpolation is performed using a step function.
+  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignment] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus] and [expands], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [InputSpec] is used. Otherwise, the value
   /// from the [other] [InputSpec] is used.
   ///
@@ -251,14 +254,17 @@ mixin _$InputSpec on Spec<InputSpec> {
       errorMaxLines: t < 0.5 ? _$this.errorMaxLines : other.errorMaxLines,
       floatingLabelBehavior:
           t < 0.5 ? _$this.floatingLabelBehavior : other.floatingLabelBehavior,
-      floatingLabelAlignmen:
-          t < 0.5 ? _$this.floatingLabelAlignmen : other.floatingLabelAlignmen,
+      floatingLabelAlignment: t < 0.5
+          ? _$this.floatingLabelAlignment
+          : other.floatingLabelAlignment,
       isCollapsed: t < 0.5 ? _$this.isCollapsed : other.isCollapsed,
       isDense: t < 0.5 ? _$this.isDense : other.isDense,
       contentPadding: EdgeInsetsGeometry.lerp(
           _$this.contentPadding, other.contentPadding, t),
-      prefixIconConstraint: BoxConstraints.lerp(
-          _$this.prefixIconConstraint, other.prefixIconConstraint, t),
+      prefixIconConstraints: BoxConstraints.lerp(
+          _$this.prefixIconConstraints, other.prefixIconConstraints, t),
+      constraints:
+          BoxConstraints.lerp(_$this.constraints, other.constraints, t),
       prefixStyle:
           MixHelpers.lerpTextStyle(_$this.prefixStyle, other.prefixStyle, t),
       prefixIconColor:
@@ -275,16 +281,12 @@ mixin _$InputSpec on Spec<InputSpec> {
       fillColor: Color.lerp(_$this.fillColor, other.fillColor, t),
       focusColor: Color.lerp(_$this.focusColor, other.focusColor, t),
       hoverColor: Color.lerp(_$this.hoverColor, other.hoverColor, t),
-      errorBorder: InputBorder.lerp(_$this.errorBorder, other.errorBorder, t),
-      focusedBorder:
-          InputBorder.lerp(_$this.focusedBorder, other.focusedBorder, t),
-      focusedErrorBorder: InputBorder.lerp(
-          _$this.focusedErrorBorder, other.focusedErrorBorder, t),
-      disabledBorder:
-          InputBorder.lerp(_$this.disabledBorder, other.disabledBorder, t),
-      enabledBorder:
-          InputBorder.lerp(_$this.enabledBorder, other.enabledBorder, t),
-      border: InputBorder.lerp(_$this.border, other.border, t),
+      errorBorder: other.errorBorder,
+      focusedBorder: other.focusedBorder,
+      focusedErrorBorder: other.focusedErrorBorder,
+      disabledBorder: other.disabledBorder,
+      enabledBorder: other.enabledBorder,
+      border: other.border,
       enabled: t < 0.5 ? _$this.enabled : other.enabled,
       alignLabelWithHint:
           t < 0.5 ? _$this.alignLabelWithHint : other.alignLabelWithHint,
@@ -333,7 +335,6 @@ mixin _$InputSpec on Spec<InputSpec> {
           ? _$this.enableInteractiveSelection
           : other.enableInteractiveSelection,
       scrollPhysics: t < 0.5 ? _$this.scrollPhysics : other.scrollPhysics,
-      autofillHints: t < 0.5 ? _$this.autofillHints : other.autofillHints,
       autovalidateMode:
           t < 0.5 ? _$this.autovalidateMode : other.autovalidateMode,
       enableIMEPersonalizedLearning: t < 0.5
@@ -351,6 +352,7 @@ mixin _$InputSpec on Spec<InputSpec> {
       clipBehavior: t < 0.5 ? _$this.clipBehavior : other.clipBehavior,
       scribbleEnabled: t < 0.5 ? _$this.scribbleEnabled : other.scribbleEnabled,
       canRequestFocus: t < 0.5 ? _$this.canRequestFocus : other.canRequestFocus,
+      expands: t < 0.5 ? _$this.expands : other.expands,
     );
   }
 
@@ -372,11 +374,12 @@ mixin _$InputSpec on Spec<InputSpec> {
         _$this.errorStyle,
         _$this.errorMaxLines,
         _$this.floatingLabelBehavior,
-        _$this.floatingLabelAlignmen,
+        _$this.floatingLabelAlignment,
         _$this.isCollapsed,
         _$this.isDense,
         _$this.contentPadding,
-        _$this.prefixIconConstraint,
+        _$this.prefixIconConstraints,
+        _$this.constraints,
         _$this.prefixStyle,
         _$this.prefixIconColor,
         _$this.suffixStyle,
@@ -427,7 +430,6 @@ mixin _$InputSpec on Spec<InputSpec> {
         _$this.scrollPadding,
         _$this.enableInteractiveSelection,
         _$this.scrollPhysics,
-        _$this.autofillHints,
         _$this.autovalidateMode,
         _$this.enableIMEPersonalizedLearning,
         _$this.mouseCursor,
@@ -438,6 +440,7 @@ mixin _$InputSpec on Spec<InputSpec> {
         _$this.clipBehavior,
         _$this.scribbleEnabled,
         _$this.canRequestFocus,
+        _$this.expands,
       ];
 
   InputSpec get _$this => this as InputSpec;
@@ -463,11 +466,12 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final TextStyleDto? errorStyle;
   final int? errorMaxLines;
   final FloatingLabelBehavior? floatingLabelBehavior;
-  final FloatingLabelAlignment? floatingLabelAlignmen;
+  final FloatingLabelAlignment? floatingLabelAlignment;
   final bool? isCollapsed;
   final bool? isDense;
   final SpacingDto? contentPadding;
-  final BoxConstraintsDto? prefixIconConstraint;
+  final BoxConstraintsDto? prefixIconConstraints;
+  final BoxConstraintsDto? constraints;
   final TextStyleDto? prefixStyle;
   final ColorDto? prefixIconColor;
   final TextStyleDto? suffixStyle;
@@ -518,7 +522,6 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final EdgeInsetsDto? scrollPadding;
   final bool? enableInteractiveSelection;
   final ScrollPhysics? scrollPhysics;
-  final Iterable<String>? autofillHints;
   final AutovalidateMode? autovalidateMode;
   final bool? enableIMEPersonalizedLearning;
   final MouseCursor? mouseCursor;
@@ -529,6 +532,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final Clip? clipBehavior;
   final bool? scribbleEnabled;
   final bool? canRequestFocus;
+  final bool? expands;
 
   const InputSpecAttribute({
     this.iconColor,
@@ -543,11 +547,12 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.errorStyle,
     this.errorMaxLines,
     this.floatingLabelBehavior,
-    this.floatingLabelAlignmen,
+    this.floatingLabelAlignment,
     this.isCollapsed,
     this.isDense,
     this.contentPadding,
-    this.prefixIconConstraint,
+    this.prefixIconConstraints,
+    this.constraints,
     this.prefixStyle,
     this.prefixIconColor,
     this.suffixStyle,
@@ -598,7 +603,6 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.scrollPadding,
     this.enableInteractiveSelection,
     this.scrollPhysics,
-    this.autofillHints,
     this.autovalidateMode,
     this.enableIMEPersonalizedLearning,
     this.mouseCursor,
@@ -609,6 +613,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.clipBehavior,
     this.scribbleEnabled,
     this.canRequestFocus,
+    this.expands,
   });
 
   /// Resolves to [InputSpec] using the provided [MixData].
@@ -634,11 +639,12 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       errorStyle: errorStyle?.resolve(mix),
       errorMaxLines: errorMaxLines,
       floatingLabelBehavior: floatingLabelBehavior,
-      floatingLabelAlignmen: floatingLabelAlignmen,
+      floatingLabelAlignment: floatingLabelAlignment,
       isCollapsed: isCollapsed,
       isDense: isDense,
       contentPadding: contentPadding?.resolve(mix),
-      prefixIconConstraint: prefixIconConstraint?.resolve(mix),
+      prefixIconConstraints: prefixIconConstraints?.resolve(mix),
+      constraints: constraints?.resolve(mix),
       prefixStyle: prefixStyle?.resolve(mix),
       prefixIconColor: prefixIconColor?.resolve(mix),
       suffixStyle: suffixStyle?.resolve(mix),
@@ -689,7 +695,6 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       scrollPadding: scrollPadding?.resolve(mix),
       enableInteractiveSelection: enableInteractiveSelection,
       scrollPhysics: scrollPhysics,
-      autofillHints: autofillHints,
       autovalidateMode: autovalidateMode,
       enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
       mouseCursor: mouseCursor,
@@ -700,6 +705,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       clipBehavior: clipBehavior,
       scribbleEnabled: scribbleEnabled,
       canRequestFocus: canRequestFocus,
+      expands: expands,
     );
   }
 
@@ -730,15 +736,16 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       errorMaxLines: other.errorMaxLines ?? errorMaxLines,
       floatingLabelBehavior:
           other.floatingLabelBehavior ?? floatingLabelBehavior,
-      floatingLabelAlignmen:
-          other.floatingLabelAlignmen ?? floatingLabelAlignmen,
+      floatingLabelAlignment:
+          other.floatingLabelAlignment ?? floatingLabelAlignment,
       isCollapsed: other.isCollapsed ?? isCollapsed,
       isDense: other.isDense ?? isDense,
       contentPadding:
           contentPadding?.merge(other.contentPadding) ?? other.contentPadding,
-      prefixIconConstraint:
-          prefixIconConstraint?.merge(other.prefixIconConstraint) ??
-              other.prefixIconConstraint,
+      prefixIconConstraints:
+          prefixIconConstraints?.merge(other.prefixIconConstraints) ??
+              other.prefixIconConstraints,
+      constraints: constraints?.merge(other.constraints) ?? other.constraints,
       prefixStyle: prefixStyle?.merge(other.prefixStyle) ?? other.prefixStyle,
       prefixIconColor: prefixIconColor?.merge(other.prefixIconColor) ??
           other.prefixIconColor,
@@ -798,7 +805,6 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       enableInteractiveSelection:
           other.enableInteractiveSelection ?? enableInteractiveSelection,
       scrollPhysics: other.scrollPhysics ?? scrollPhysics,
-      autofillHints: other.autofillHints ?? autofillHints,
       autovalidateMode: other.autovalidateMode ?? autovalidateMode,
       enableIMEPersonalizedLearning:
           other.enableIMEPersonalizedLearning ?? enableIMEPersonalizedLearning,
@@ -811,6 +817,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       clipBehavior: other.clipBehavior ?? clipBehavior,
       scribbleEnabled: other.scribbleEnabled ?? scribbleEnabled,
       canRequestFocus: other.canRequestFocus ?? canRequestFocus,
+      expands: other.expands ?? expands,
     );
   }
 
@@ -832,11 +839,12 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         errorStyle,
         errorMaxLines,
         floatingLabelBehavior,
-        floatingLabelAlignmen,
+        floatingLabelAlignment,
         isCollapsed,
         isDense,
         contentPadding,
-        prefixIconConstraint,
+        prefixIconConstraints,
+        constraints,
         prefixStyle,
         prefixIconColor,
         suffixStyle,
@@ -887,7 +895,6 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         scrollPadding,
         enableInteractiveSelection,
         scrollPhysics,
-        autofillHints,
         autovalidateMode,
         enableIMEPersonalizedLearning,
         mouseCursor,
@@ -898,6 +905,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         clipBehavior,
         scribbleEnabled,
         canRequestFocus,
+        expands,
       ];
 }
 
@@ -947,9 +955,9 @@ class InputSpecUtility<T extends Attribute>
   late final floatingLabelBehavior =
       FloatingLabelBehaviorUtility((v) => only(floatingLabelBehavior: v));
 
-  /// Utility for defining [InputSpecAttribute.floatingLabelAlignmen]
-  late final floatingLabelAlignmen =
-      FloatingLabelAlignmentUtility((v) => only(floatingLabelAlignmen: v));
+  /// Utility for defining [InputSpecAttribute.floatingLabelAlignment]
+  late final floatingLabelAlignment =
+      FloatingLabelAlignmentUtility((v) => only(floatingLabelAlignment: v));
 
   /// Utility for defining [InputSpecAttribute.isCollapsed]
   late final isCollapsed = BoolUtility((v) => only(isCollapsed: v));
@@ -960,9 +968,12 @@ class InputSpecUtility<T extends Attribute>
   /// Utility for defining [InputSpecAttribute.contentPadding]
   late final contentPadding = SpacingUtility((v) => only(contentPadding: v));
 
-  /// Utility for defining [InputSpecAttribute.prefixIconConstraint]
-  late final prefixIconConstraint =
-      BoxConstraintsUtility((v) => only(prefixIconConstraint: v));
+  /// Utility for defining [InputSpecAttribute.prefixIconConstraints]
+  late final prefixIconConstraints =
+      BoxConstraintsUtility((v) => only(prefixIconConstraints: v));
+
+  /// Utility for defining [InputSpecAttribute.constraints]
+  late final constraints = BoxConstraintsUtility((v) => only(constraints: v));
 
   /// Utility for defining [InputSpecAttribute.prefixStyle]
   late final prefixStyle = TextStyleUtility((v) => only(prefixStyle: v));
@@ -1130,9 +1141,6 @@ class InputSpecUtility<T extends Attribute>
   late final scrollPhysics =
       ScrollPhysicsUtility((v) => only(scrollPhysics: v));
 
-  /// Utility for defining [InputSpecAttribute.autofillHints]
-  late final autofillHints = IterableUtility((v) => only(autofillHints: v));
-
   /// Utility for defining [InputSpecAttribute.autovalidateMode]
   late final autovalidateMode =
       AutovalidateModeUtility((v) => only(autovalidateMode: v));
@@ -1169,6 +1177,9 @@ class InputSpecUtility<T extends Attribute>
   /// Utility for defining [InputSpecAttribute.canRequestFocus]
   late final canRequestFocus = BoolUtility((v) => only(canRequestFocus: v));
 
+  /// Utility for defining [InputSpecAttribute.expands]
+  late final expands = BoolUtility((v) => only(expands: v));
+
   InputSpecUtility(super.builder, {super.mutable});
 
   InputSpecUtility<T> get chain =>
@@ -1192,11 +1203,12 @@ class InputSpecUtility<T extends Attribute>
     TextStyleDto? errorStyle,
     int? errorMaxLines,
     FloatingLabelBehavior? floatingLabelBehavior,
-    FloatingLabelAlignment? floatingLabelAlignmen,
+    FloatingLabelAlignment? floatingLabelAlignment,
     bool? isCollapsed,
     bool? isDense,
     SpacingDto? contentPadding,
-    BoxConstraintsDto? prefixIconConstraint,
+    BoxConstraintsDto? prefixIconConstraints,
+    BoxConstraintsDto? constraints,
     TextStyleDto? prefixStyle,
     ColorDto? prefixIconColor,
     TextStyleDto? suffixStyle,
@@ -1247,7 +1259,6 @@ class InputSpecUtility<T extends Attribute>
     EdgeInsetsDto? scrollPadding,
     bool? enableInteractiveSelection,
     ScrollPhysics? scrollPhysics,
-    Iterable<String>? autofillHints,
     AutovalidateMode? autovalidateMode,
     bool? enableIMEPersonalizedLearning,
     MouseCursor? mouseCursor,
@@ -1258,6 +1269,7 @@ class InputSpecUtility<T extends Attribute>
     Clip? clipBehavior,
     bool? scribbleEnabled,
     bool? canRequestFocus,
+    bool? expands,
   }) {
     return builder(InputSpecAttribute(
       iconColor: iconColor,
@@ -1272,11 +1284,12 @@ class InputSpecUtility<T extends Attribute>
       errorStyle: errorStyle,
       errorMaxLines: errorMaxLines,
       floatingLabelBehavior: floatingLabelBehavior,
-      floatingLabelAlignmen: floatingLabelAlignmen,
+      floatingLabelAlignment: floatingLabelAlignment,
       isCollapsed: isCollapsed,
       isDense: isDense,
       contentPadding: contentPadding,
-      prefixIconConstraint: prefixIconConstraint,
+      prefixIconConstraints: prefixIconConstraints,
+      constraints: constraints,
       prefixStyle: prefixStyle,
       prefixIconColor: prefixIconColor,
       suffixStyle: suffixStyle,
@@ -1327,7 +1340,6 @@ class InputSpecUtility<T extends Attribute>
       scrollPadding: scrollPadding,
       enableInteractiveSelection: enableInteractiveSelection,
       scrollPhysics: scrollPhysics,
-      autofillHints: autofillHints,
       autovalidateMode: autovalidateMode,
       enableIMEPersonalizedLearning: enableIMEPersonalizedLearning,
       mouseCursor: mouseCursor,
@@ -1338,6 +1350,7 @@ class InputSpecUtility<T extends Attribute>
       clipBehavior: clipBehavior,
       scribbleEnabled: scribbleEnabled,
       canRequestFocus: canRequestFocus,
+      expands: expands,
     ));
   }
 }

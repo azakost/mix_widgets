@@ -1,59 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:mix/mix.dart';
 
-final class InputBorderUtility<T extends Attribute> extends MixUtility<T, InputBorder> {
-  const InputBorderUtility(super.builder);
-
-  T get none => builder(InputBorder.none);
-
-  T call(InputBorder type) => builder(type);
-
-  T outline({double? radius, Color? color, double? width}) {
-    return builder(
-      OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
-        borderSide: BorderSide(color: color ?? Colors.transparent, width: width ?? 0),
-      ),
-    );
-  }
-
-  T outlineLabelInside({double? radius, Color? color, double? width}) {
-    return builder(
-      OutlineLabelInsideInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
-        borderSide: BorderSide(color: color ?? Colors.transparent, width: width ?? 0),
-      ),
-    );
-  }
-
-  T underlined({double? radius, Color? color, double? width}) {
-    return builder(
-      UnderlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),
-        borderSide: BorderSide(color: color ?? Colors.transparent, width: width ?? 0),
-      ),
-    );
-  }
-}
-
-final class KeyboardTypeUtility<T extends Attribute> extends MixUtility<T, TextInputType> {
-  const KeyboardTypeUtility(super.builder);
-
-  T call(TextInputType type) => builder(type);
-  T datetime() => builder(TextInputType.datetime);
-  T emailAddress() => builder(TextInputType.emailAddress);
-  T multiline() => builder(TextInputType.multiline);
-  T name() => builder(TextInputType.name);
-  T number() => builder(TextInputType.number);
-  T phone() => builder(TextInputType.phone);
-  T text() => builder(TextInputType.text);
-  T url() => builder(TextInputType.url);
-  T visiblePassword() => builder(TextInputType.visiblePassword);
-}
-
-/// custom outline border with label inside
 class OutlineLabelInsideInputBorder extends InputBorder {
   final BorderRadius borderRadius;
 
@@ -152,27 +100,4 @@ class OutlineLabelInsideInputBorder extends InputBorder {
   OutlineLabelInsideInputBorder scale(double t) {
     return OutlineLabelInsideInputBorder(borderSide: borderSide.scale(t));
   }
-}
-
-final class TextCapitalizationUtility<T extends Attribute> extends MixUtility<T, TextCapitalization> {
-  const TextCapitalizationUtility(super.builder);
-
-  T call(TextCapitalization type) => builder(type);
-  T characters() => builder(TextCapitalization.characters);
-  T none() => builder(TextCapitalization.none);
-  T sentences() => builder(TextCapitalization.sentences);
-  T words() => builder(TextCapitalization.words);
-}
-
-final class TextInputActionUtility<T extends Attribute> extends MixUtility<T, TextInputAction> {
-  const TextInputActionUtility(super.builder);
-
-  T call(TextInputAction type) => builder(type);
-  T continueAction() => builder(TextInputAction.continueAction);
-  T done() => builder(TextInputAction.done);
-  T emergencyCall() => builder(TextInputAction.emergencyCall);
-  T go() => builder(TextInputAction.go);
-  T join() => builder(TextInputAction.join);
-  T newline() => builder(TextInputAction.newline);
-  T next() => builder(TextInputAction.next);
 }
