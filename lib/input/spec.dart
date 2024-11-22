@@ -102,6 +102,8 @@ final class InputSpec extends Spec<InputSpec> with _$InputSpec {
   final bool? scribbleEnabled;
   final bool? canRequestFocus;
   final WidgetModifiersData? wrap;
+  final EdgeInsetsGeometry? dropdownPadding;
+  final FlexFit? flexFit;
 
   const InputSpec({
     this.iconColor,
@@ -184,6 +186,8 @@ final class InputSpec extends Spec<InputSpec> with _$InputSpec {
     this.canRequestFocus,
     this.expands,
     this.wrap,
+    this.dropdownPadding,
+    this.flexFit,
   });
 
   static InputSpec of(BuildContext context) {

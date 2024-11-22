@@ -113,6 +113,8 @@ mixin _$InputSpec on Spec<InputSpec> {
     bool? canRequestFocus,
     bool? expands,
     WidgetModifiersData? wrap,
+    EdgeInsetsGeometry? dropdownPadding,
+    FlexFit? flexFit,
   }) {
     return InputSpec(
       iconColor: iconColor ?? _$this.iconColor,
@@ -202,6 +204,8 @@ mixin _$InputSpec on Spec<InputSpec> {
       canRequestFocus: canRequestFocus ?? _$this.canRequestFocus,
       expands: expands ?? _$this.expands,
       wrap: wrap ?? _$this.wrap,
+      dropdownPadding: dropdownPadding ?? _$this.dropdownPadding,
+      flexFit: flexFit ?? _$this.flexFit,
     );
   }
 
@@ -218,7 +222,7 @@ mixin _$InputSpec on Spec<InputSpec> {
   ///
   /// - [Color.lerp] for [iconColor] and [prefixIconColor] and [suffixIconColor] and [fillColor] and [focusColor] and [hoverColor] and [cursorColor] and [cursorErrorColor].
   /// - [MixHelpers.lerpTextStyle] for [labelStyle] and [floatingLabelStyle] and [helperStyle] and [hintStyle] and [errorStyle] and [prefixStyle] and [suffixStyle] and [counterStyle] and [style].
-  /// - [EdgeInsetsGeometry.lerp] for [contentPadding].
+  /// - [EdgeInsetsGeometry.lerp] for [contentPadding] and [dropdownPadding].
   /// - [BoxConstraints.lerp] for [prefixIconConstraints] and [constraints] and [suffixIconConstraints] and [constraint].
   /// - [InputBorder.lerp] for [errorBorder] and [focusedBorder] and [focusedErrorBorder] and [disabledBorder] and [enabledBorder] and [border].
   /// - [MixHelpers.lerpStrutStyle] for [strutStyle].
@@ -226,7 +230,7 @@ mixin _$InputSpec on Spec<InputSpec> {
   /// - [Radius.lerp] for [cursorRadius].
   /// - [EdgeInsets.lerp] for [scrollPadding].
 
-  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignment] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus] and [expands] and [wrap], the interpolation is performed using a step function.
+  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignment] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus] and [expands] and [wrap] and [flexFit], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [InputSpec] is used. Otherwise, the value
   /// from the [other] [InputSpec] is used.
   ///
@@ -356,6 +360,9 @@ mixin _$InputSpec on Spec<InputSpec> {
       canRequestFocus: t < 0.5 ? _$this.canRequestFocus : other.canRequestFocus,
       expands: t < 0.5 ? _$this.expands : other.expands,
       wrap: t < 0.5 ? _$this.wrap : other.wrap,
+      dropdownPadding: EdgeInsetsGeometry.lerp(
+          _$this.dropdownPadding, other.dropdownPadding, t),
+      flexFit: t < 0.5 ? _$this.flexFit : other.flexFit,
     );
   }
 
@@ -445,6 +452,8 @@ mixin _$InputSpec on Spec<InputSpec> {
         _$this.canRequestFocus,
         _$this.expands,
         _$this.wrap,
+        _$this.dropdownPadding,
+        _$this.flexFit,
       ];
 
   InputSpec get _$this => this as InputSpec;
@@ -538,6 +547,8 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final bool? canRequestFocus;
   final bool? expands;
   final WidgetModifiersDataDto? wrap;
+  final SpacingDto? dropdownPadding;
+  final FlexFit? flexFit;
 
   const InputSpecAttribute({
     this.iconColor,
@@ -620,6 +631,8 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.canRequestFocus,
     this.expands,
     this.wrap,
+    this.dropdownPadding,
+    this.flexFit,
   });
 
   /// Resolves to [InputSpec] using the provided [MixData].
@@ -713,6 +726,8 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       canRequestFocus: canRequestFocus,
       expands: expands,
       wrap: wrap?.resolve(mix),
+      dropdownPadding: dropdownPadding?.resolve(mix),
+      flexFit: flexFit,
     );
   }
 
@@ -826,6 +841,9 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       canRequestFocus: other.canRequestFocus ?? canRequestFocus,
       expands: other.expands ?? expands,
       wrap: wrap?.merge(other.wrap) ?? other.wrap,
+      dropdownPadding: dropdownPadding?.merge(other.dropdownPadding) ??
+          other.dropdownPadding,
+      flexFit: other.flexFit ?? flexFit,
     );
   }
 
@@ -915,6 +933,8 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         canRequestFocus,
         expands,
         wrap,
+        dropdownPadding,
+        flexFit,
       ];
 }
 
@@ -1192,6 +1212,12 @@ class InputSpecUtility<T extends Attribute>
   /// Utility for defining [InputSpecAttribute.wrap]
   late final wrap = SpecModifierUtility((v) => only(wrap: v));
 
+  /// Utility for defining [InputSpecAttribute.dropdownPadding]
+  late final dropdownPadding = SpacingUtility((v) => only(dropdownPadding: v));
+
+  /// Utility for defining [InputSpecAttribute.flexFit]
+  late final flexFit = FlexFitUtility((v) => only(flexFit: v));
+
   InputSpecUtility(super.builder, {super.mutable});
 
   InputSpecUtility<T> get chain =>
@@ -1283,6 +1309,8 @@ class InputSpecUtility<T extends Attribute>
     bool? canRequestFocus,
     bool? expands,
     WidgetModifiersDataDto? wrap,
+    SpacingDto? dropdownPadding,
+    FlexFit? flexFit,
   }) {
     return builder(InputSpecAttribute(
       iconColor: iconColor,
@@ -1365,6 +1393,8 @@ class InputSpecUtility<T extends Attribute>
       canRequestFocus: canRequestFocus,
       expands: expands,
       wrap: wrap,
+      dropdownPadding: dropdownPadding,
+      flexFit: flexFit,
     ));
   }
 }

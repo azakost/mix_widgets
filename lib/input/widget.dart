@@ -3,14 +3,18 @@ import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mix/mix.dart';
-import 'package:mix_widgets/wrapper_modifier.dart';
 
+import '../popup_sheet/widget.dart';
+import '../wrapper_modifier.dart';
 import 'spec.dart';
 
 export 'spec.dart';
 
 class Input extends StatelessWidget {
   final TextEditingController? controller;
+  final bool? readOnly;
+  final bool? canRequestFocus;
+  final bool? enabled;
   final Widget? icon;
   final Widget? error;
   final Widget? helper;
@@ -32,7 +36,7 @@ class Input extends StatelessWidget {
   final String? restorationId;
   final String? forceErrorText;
   final void Function(String)? onChanged;
-  final void Function()? onTap;
+  final void Function(BuildContext context)? onTap;
   final void Function()? onEditingComplete;
   final void Function(String)? onFieldSubmitted;
   final void Function(String?)? onSaved;
@@ -58,6 +62,9 @@ class Input extends StatelessWidget {
   const Input({
     super.key,
     this.controller,
+    this.readOnly,
+    this.canRequestFocus,
+    this.enabled,
     this.icon,
     this.error,
     this.helper,
@@ -169,8 +176,9 @@ class Input extends StatelessWidget {
               suffixIconConstraints: spec.suffixIconConstraints,
             ),
             controller: controller,
+            readOnly: readOnly ?? spec.readOnly ?? false,
             onChanged: onChanged,
-            onTap: onTap,
+            onTap: () => onTap?.call(context),
             onEditingComplete: onEditingComplete,
             onFieldSubmitted: onFieldSubmitted,
             onSaved: onSaved,
@@ -193,7 +201,7 @@ class Input extends StatelessWidget {
             magnifierConfiguration: magnifierConfiguration,
             forceErrorText: forceErrorText,
             scribbleEnabled: spec.scribbleEnabled ?? true,
-            canRequestFocus: spec.canRequestFocus ?? true,
+            canRequestFocus: canRequestFocus ?? spec.canRequestFocus ?? true,
             enableIMEPersonalizedLearning: spec.enableIMEPersonalizedLearning ?? true,
             selectionWidthStyle: spec.selectionWidthStyle ?? BoxWidthStyle.tight,
             selectionHeightStyle: spec.selectionHeightStyle ?? BoxHeightStyle.tight,
@@ -204,7 +212,6 @@ class Input extends StatelessWidget {
             textDirection: spec.textDirection,
             textAlign: spec.textAlign ?? TextAlign.start,
             textAlignVertical: spec.textAlignVertical,
-            readOnly: spec.readOnly ?? false,
             showCursor: spec.showCursor,
             autofocus: spec.autofocus ?? false,
             obscureText: spec.obscureText ?? false,
@@ -216,7 +223,7 @@ class Input extends StatelessWidget {
             expands: spec.expands ?? false,
             maxLength: spec.maxLength,
             inputFormatters: spec.inputFormatters,
-            enabled: spec.enabled ?? true,
+            enabled: enabled ?? spec.enabled ?? true,
             cursorColor: spec.cursorColor,
             cursorWidth: spec.cursorWidth ?? 2.0,
             cursorHeight: spec.cursorHeight,
@@ -240,6 +247,142 @@ class Input extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+
+  static Widget dropdown<T>({
+    TextEditingController? controller,
+    required List<T> items,
+    required Widget Function(T item, TextEditingController controller, bool selected) itemBuilder,
+    bool Function(T item, TextEditingController controller)? isSelected,
+    Widget? header,
+    Widget? footer,
+    Widget Function(BuildContext, int)? separatorBuilder,
+    Widget? icon,
+    Widget? error,
+    Widget? helper,
+    Widget? label,
+    Widget? suffixIcon,
+    Widget? prefixIcon,
+    Widget? prefix,
+    Widget? suffix,
+    Widget? counter,
+    String? initialValue,
+    String? labelText,
+    String? hintText,
+    String? errorText,
+    String? helperText,
+    String? counterText,
+    String? semanticCounterText,
+    String? prefixText,
+    String? suffixText,
+    String? restorationId,
+    String? forceErrorText,
+    void Function(String)? onChanged,
+    void Function(BuildContext context)? onTap,
+    void Function()? onEditingComplete,
+    void Function(String)? onFieldSubmitted,
+    void Function(String?)? onSaved,
+    String? Function(String?)? validator,
+    List<String>? autofillHints,
+    ScrollController? scrollController,
+    InputCounterWidgetBuilder? buildCounter,
+    AppPrivateCommandCallback? onAppPrivateCommand,
+    Function(PointerDownEvent)? onTapOutside,
+    TextSelectionControls? selectionControls,
+    SpellCheckConfiguration? spellCheckConfiguration,
+    WidgetStatesController? statesController,
+    FocusNode? focusNode,
+    UndoHistoryController? undoController,
+    ContentInsertionConfiguration? contentInsertionConfiguration,
+    Widget Function(BuildContext, EditableTextState)? contextMenuBuilder,
+    TextMagnifierConfiguration? magnifierConfiguration,
+    bool inherit = false,
+    Style? style,
+    List<Type>? orderOfModifiers,
+  }) {
+    final textController = controller ?? TextEditingController();
+    return Input(
+      readOnly: true,
+      canRequestFocus: false,
+      suffixIcon: const Icon(Icons.keyboard_arrow_down_rounded),
+      onTap: (context) {
+        onTap?.call(context);
+        final spec = InputSpec.of(context);
+        final scrollController = ScrollController();
+        bool isOpened = true;
+        scrollController.addListener(() {
+          if (scrollController.offset < -80 && isOpened) {
+            Navigator.of(context).pop();
+            isOpened = false;
+          }
+        });
+        showPopupSheet(
+          context,
+          Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              if (header != null) header,
+              Flexible(
+                fit: spec.flexFit ?? FlexFit.loose,
+                child: ListView.separated(
+                  primary: false,
+                  shrinkWrap: true,
+                  padding: spec.dropdownPadding,
+                  controller: scrollController,
+                  itemCount: items.length,
+                  separatorBuilder: separatorBuilder ?? (context, index) => const SizedBox.shrink(),
+                  itemBuilder: (context, index) {
+                    return itemBuilder(items[index], textController, isSelected?.call(items[index], textController) ?? false);
+                  },
+                ),
+              ),
+              if (footer != null) footer,
+            ],
+          ),
+        );
+      },
+      controller: textController,
+      icon: icon,
+      error: error,
+      helper: helper,
+      label: label,
+      prefixIcon: prefixIcon,
+      prefix: prefix,
+      suffix: suffix,
+      counter: counter,
+      initialValue: initialValue,
+      labelText: labelText,
+      hintText: hintText,
+      errorText: errorText,
+      helperText: helperText,
+      counterText: counterText,
+      semanticCounterText: semanticCounterText,
+      prefixText: prefixText,
+      suffixText: suffixText,
+      restorationId: restorationId,
+      forceErrorText: forceErrorText,
+      onChanged: onChanged,
+      onEditingComplete: onEditingComplete,
+      onFieldSubmitted: onFieldSubmitted,
+      onSaved: onSaved,
+      validator: validator,
+      autofillHints: autofillHints,
+      scrollController: scrollController,
+      buildCounter: buildCounter,
+      onAppPrivateCommand: onAppPrivateCommand,
+      onTapOutside: onTapOutside,
+      selectionControls: selectionControls,
+      spellCheckConfiguration: spellCheckConfiguration,
+      statesController: statesController,
+      focusNode: focusNode,
+      undoController: undoController,
+      contentInsertionConfiguration: contentInsertionConfiguration,
+      contextMenuBuilder: contextMenuBuilder,
+      magnifierConfiguration: magnifierConfiguration,
+      inherit: inherit,
+      style: style,
+      orderOfModifiers: orderOfModifiers,
     );
   }
 }
