@@ -20,6 +20,7 @@ class Home extends StatelessWidget {
       body: VBox(
         style: style,
         children: [
+          Input(),
           Btn(
             label: 'Text',
             icon: Icons.wallet,
