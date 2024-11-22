@@ -7,25 +7,30 @@ import 'package:mix_widgets/wrapper_modifier.dart';
 
 import 'spec.dart';
 
+export 'spec.dart';
+
 class Input extends StatelessWidget {
+  final TextEditingController? controller;
   final Widget? icon;
   final Widget? error;
   final Widget? helper;
   final Widget? label;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+  final Widget? prefix;
+  final Widget? suffix;
+  final Widget? counter;
+  final String? initialValue;
   final String? labelText;
   final String? hintText;
   final String? errorText;
   final String? helperText;
-  final Widget? suffixIcon;
-  final Widget? prefixIcon;
   final String? counterText;
   final String? semanticCounterText;
-  final Widget? prefix;
-  final Widget? suffix;
-  final Widget? counter;
   final String? prefixText;
   final String? suffixText;
-  final TextEditingController? controller;
+  final String? restorationId;
+  final String? forceErrorText;
   final void Function(String)? onChanged;
   final void Function()? onTap;
   final void Function()? onEditingComplete;
@@ -33,7 +38,6 @@ class Input extends StatelessWidget {
   final void Function(String?)? onSaved;
   final String? Function(String?)? validator;
   final List<String>? autofillHints;
-  final String? restorationId;
   final ScrollController? scrollController;
   final InputCounterWidgetBuilder? buildCounter;
   final AppPrivateCommandCallback? onAppPrivateCommand;
@@ -44,35 +48,36 @@ class Input extends StatelessWidget {
   final FocusNode? focusNode;
   final Object groupId = EditableText;
   final UndoHistoryController? undoController;
-  final String? initialValue;
   final ContentInsertionConfiguration? contentInsertionConfiguration;
   final Widget Function(BuildContext, EditableTextState)? contextMenuBuilder;
   final TextMagnifierConfiguration? magnifierConfiguration;
-  final String? forceErrorText;
   final bool inherit;
   final Style? style;
   final List<Type>? orderOfModifiers;
 
   const Input({
     super.key,
+    this.controller,
     this.icon,
     this.error,
     this.helper,
     this.label,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.prefix,
+    this.suffix,
+    this.counter,
+    this.initialValue,
     this.labelText,
     this.hintText,
     this.errorText,
     this.helperText,
-    this.suffixIcon,
-    this.prefixIcon,
     this.counterText,
     this.semanticCounterText,
-    this.prefix,
-    this.suffix,
-    this.counter,
     this.prefixText,
     this.suffixText,
-    this.controller,
+    this.restorationId,
+    this.forceErrorText,
     this.onChanged,
     this.onTap,
     this.onEditingComplete,
@@ -80,7 +85,6 @@ class Input extends StatelessWidget {
     this.onSaved,
     this.validator,
     this.autofillHints,
-    this.restorationId,
     this.scrollController,
     this.buildCounter,
     this.onAppPrivateCommand,
@@ -90,29 +94,25 @@ class Input extends StatelessWidget {
     this.statesController,
     this.focusNode,
     this.undoController,
-    this.initialValue,
     this.contentInsertionConfiguration,
     this.contextMenuBuilder,
     this.magnifierConfiguration,
-    this.forceErrorText,
-    this.inherit = true,
+    this.inherit = false,
     this.style,
     this.orderOfModifiers,
   });
 
   @override
   Widget build(BuildContext context) {
-    return WrapperModifier(
-      modifiers: const [
-        // Add modifiers here
-      ],
-      child: SpecBuilder(
-        inherit: inherit,
-        style: style ?? const Style.empty(),
-        orderOfModifiers: orderOfModifiers,
-        builder: (context) {
-          final spec = InputSpec.of(context);
-          return TextFormField(
+    return SpecBuilder(
+      inherit: inherit,
+      style: style ?? const Style.empty(),
+      orderOfModifiers: orderOfModifiers,
+      builder: (context) {
+        final spec = InputSpec.of(context);
+        return WrapperModifier(
+          modifiers: [...(spec.wrap?.value ?? [])],
+          child: TextFormField(
             decoration: InputDecoration(
               icon: icon,
               error: error,
@@ -145,7 +145,7 @@ class Input extends StatelessWidget {
               focusedBorder: spec.focusedBorder,
               focusedErrorBorder: spec.focusedErrorBorder,
               disabledBorder: spec.disabledBorder,
-              enabledBorder: spec.enabledBorder,
+              enabledBorder: spec.enabledBorder ?? spec.border,
               border: spec.border,
               enabled: spec.enabled ?? true,
               alignLabelWithHint: spec.alignLabelWithHint,
@@ -237,9 +237,9 @@ class Input extends StatelessWidget {
             style: spec.style,
             dragStartBehavior: spec.dragStartBehavior ?? DragStartBehavior.start,
             clipBehavior: spec.clipBehavior ?? Clip.none,
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

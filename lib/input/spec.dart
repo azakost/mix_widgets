@@ -101,6 +101,7 @@ final class InputSpec extends Spec<InputSpec> with _$InputSpec {
   final Clip? clipBehavior;
   final bool? scribbleEnabled;
   final bool? canRequestFocus;
+  final WidgetModifiersData? wrap;
 
   const InputSpec({
     this.iconColor,
@@ -182,6 +183,7 @@ final class InputSpec extends Spec<InputSpec> with _$InputSpec {
     this.scribbleEnabled,
     this.canRequestFocus,
     this.expands,
+    this.wrap,
   });
 
   static InputSpec of(BuildContext context) {
@@ -377,7 +379,7 @@ final class InputBorderUtility<T extends Attribute> extends MixUtility<T, InputB
     );
   }
 
-  T outlineLabelInside({double? radius, Color? color, double? width}) {
+  T outlineLabelInside(double? radius, double? width, Color? color) {
     return builder(
       OutlineLabelInsideInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(radius ?? 0)),

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mix_widgets/bottom_menu/widget.dart';
 import 'package:mix_widgets/mix_widgets.dart';
 
 void main() {
@@ -12,15 +11,20 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Style(
-      $bottomMenu.shape.roundedRectangle.borderRadius.directional.top(8),
-      $bottomMenu.backgroundColor.yellow(),
+      $input.wrap.padding.all(16),
+      $input.contentPadding.symmetrical(8, 16),
+      $input.cursorHeight(16),
+      $input.style.color.red(),
     );
     return Scaffold(
       appBar: AppBar(title: const Text('Example')),
       body: VBox(
         style: style,
         children: [
-          Input(),
+          const Input(
+            labelText: "Label",
+            inherit: true,
+          ),
           Btn(
             label: 'Text',
             icon: Icons.wallet,

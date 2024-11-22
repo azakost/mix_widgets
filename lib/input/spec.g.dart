@@ -112,6 +112,7 @@ mixin _$InputSpec on Spec<InputSpec> {
     bool? scribbleEnabled,
     bool? canRequestFocus,
     bool? expands,
+    WidgetModifiersData? wrap,
   }) {
     return InputSpec(
       iconColor: iconColor ?? _$this.iconColor,
@@ -200,6 +201,7 @@ mixin _$InputSpec on Spec<InputSpec> {
       scribbleEnabled: scribbleEnabled ?? _$this.scribbleEnabled,
       canRequestFocus: canRequestFocus ?? _$this.canRequestFocus,
       expands: expands ?? _$this.expands,
+      wrap: wrap ?? _$this.wrap,
     );
   }
 
@@ -224,7 +226,7 @@ mixin _$InputSpec on Spec<InputSpec> {
   /// - [Radius.lerp] for [cursorRadius].
   /// - [EdgeInsets.lerp] for [scrollPadding].
 
-  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignment] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus] and [expands], the interpolation is performed using a step function.
+  /// For [helperMaxLines] and [hintTextDirection] and [hintMaxLines] and [hintFadeDuration] and [errorMaxLines] and [floatingLabelBehavior] and [floatingLabelAlignment] and [isCollapsed] and [isDense] and [filled] and [enabled] and [alignLabelWithHint] and [keyboardType] and [textCapitalization] and [textInputAction] and [textDirection] and [textAlign] and [textAlignVertical] and [autofocus] and [readOnly] and [showCursor] and [obscuringCharacter] and [obscureText] and [autocorrect] and [smartDashesType] and [smartQuotesType] and [enableSuggestions] and [maxLengthEnforcement] and [minLines] and [maxLength] and [inputFormatters] and [ignorePointers] and [keyboardAppearance] and [enableInteractiveSelection] and [scrollPhysics] and [autovalidateMode] and [enableIMEPersonalizedLearning] and [mouseCursor] and [cursorOpacityAnimates] and [selectionHeightStyle] and [selectionWidthStyle] and [dragStartBehavior] and [clipBehavior] and [scribbleEnabled] and [canRequestFocus] and [expands] and [wrap], the interpolation is performed using a step function.
   /// If [t] is less than 0.5, the value from the current [InputSpec] is used. Otherwise, the value
   /// from the [other] [InputSpec] is used.
   ///
@@ -353,6 +355,7 @@ mixin _$InputSpec on Spec<InputSpec> {
       scribbleEnabled: t < 0.5 ? _$this.scribbleEnabled : other.scribbleEnabled,
       canRequestFocus: t < 0.5 ? _$this.canRequestFocus : other.canRequestFocus,
       expands: t < 0.5 ? _$this.expands : other.expands,
+      wrap: t < 0.5 ? _$this.wrap : other.wrap,
     );
   }
 
@@ -441,6 +444,7 @@ mixin _$InputSpec on Spec<InputSpec> {
         _$this.scribbleEnabled,
         _$this.canRequestFocus,
         _$this.expands,
+        _$this.wrap,
       ];
 
   InputSpec get _$this => this as InputSpec;
@@ -533,6 +537,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
   final bool? scribbleEnabled;
   final bool? canRequestFocus;
   final bool? expands;
+  final WidgetModifiersDataDto? wrap;
 
   const InputSpecAttribute({
     this.iconColor,
@@ -614,6 +619,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
     this.scribbleEnabled,
     this.canRequestFocus,
     this.expands,
+    this.wrap,
   });
 
   /// Resolves to [InputSpec] using the provided [MixData].
@@ -706,6 +712,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       scribbleEnabled: scribbleEnabled,
       canRequestFocus: canRequestFocus,
       expands: expands,
+      wrap: wrap?.resolve(mix),
     );
   }
 
@@ -818,6 +825,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
       scribbleEnabled: other.scribbleEnabled ?? scribbleEnabled,
       canRequestFocus: other.canRequestFocus ?? canRequestFocus,
       expands: other.expands ?? expands,
+      wrap: wrap?.merge(other.wrap) ?? other.wrap,
     );
   }
 
@@ -906,6 +914,7 @@ final class InputSpecAttribute extends SpecAttribute<InputSpec> {
         scribbleEnabled,
         canRequestFocus,
         expands,
+        wrap,
       ];
 }
 
@@ -1180,6 +1189,9 @@ class InputSpecUtility<T extends Attribute>
   /// Utility for defining [InputSpecAttribute.expands]
   late final expands = BoolUtility((v) => only(expands: v));
 
+  /// Utility for defining [InputSpecAttribute.wrap]
+  late final wrap = SpecModifierUtility((v) => only(wrap: v));
+
   InputSpecUtility(super.builder, {super.mutable});
 
   InputSpecUtility<T> get chain =>
@@ -1270,6 +1282,7 @@ class InputSpecUtility<T extends Attribute>
     bool? scribbleEnabled,
     bool? canRequestFocus,
     bool? expands,
+    WidgetModifiersDataDto? wrap,
   }) {
     return builder(InputSpecAttribute(
       iconColor: iconColor,
@@ -1351,6 +1364,7 @@ class InputSpecUtility<T extends Attribute>
       scribbleEnabled: scribbleEnabled,
       canRequestFocus: canRequestFocus,
       expands: expands,
+      wrap: wrap,
     ));
   }
 }

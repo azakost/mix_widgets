@@ -1,6 +1,6 @@
 import 'package:mix_widgets/mix_widgets.dart';
 
-extension EdgeInsetsUtilityX<T extends Attribute> on EdgeInsetsUtility<T> {
+extension SpacingUtilityX<T extends Attribute> on SpacingUtility<T> {
   T horizontal(double value) {
     return only(left: value, right: value);
   }
